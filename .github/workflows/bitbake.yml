@@ -59,11 +59,10 @@ jobs:
       # Run bitbake
       - name: Bitbake MACHINE=${{ matrix.target_machine }}
         run: |
-          source /home/runner/work/poky/oe-init-build-env rpi-build
+          source /home/runner/work/poky/oe-init-build-env rpi-buildp
           bitbake-layers add-layer /home/runner/work/meta-openembedded/meta-oe/
           bitbake-layers add-layer /home/runner/work/meta-tinyos-distro/
           bitbake-layers add-layer /home/runner/work/meta-raspberry/
           bitbake-layers add-layer /home/runner/work/meta-dotnet/
-          MACHINE=${{matrix.target_machine}}
           df -h
         working-directory: /mnt
