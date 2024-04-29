@@ -25,7 +25,6 @@ jobs:
     strategy:
       matrix:
         target_machine: [raspberrypi0-2w, raspberrypi4, raspberrypi5]
-        tensorflow_version: [2.16.1]
 
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -51,6 +50,20 @@ jobs:
         run: |
           sudo chown runner /mnt
           git clone -b ${TARGET_VERSION} git://git.yoctoproject.org/poky.git
-          git clone -b ${TARGET_VERSION} git://git.yoctoproject.org/meta-raspberrypi
           git clone -b ${TARGET_VERSION} git://git.openembedded.org/meta-openembedded
+          git clone -b ${TARGET_VERSION} https://github.com/tiny-osx/meta-tinyos-distro.git
+          git clone -b ${TARGET_VERSION} https://github.com/tiny-osx/meta-dotnet.git
+          git clone -b ${TARGET_VERSION} https://github.com/tiny-osx/meta-raspberry.git
         working-directory: /home/runner/work
+
+      # Run bitbake
+      - name: Bitbake MACHINE=${{ matrix.target_machine }}
+        run: |
+          source /home/runner/work/poky/oe-init-build-env rpi-build
+          bitbake-layers add-layer /home/runner/work/meta-openembedded/meta-oe/
+          bitbake-layers add-layer /home/runner/work/meta-tinyos-distro/
+          bitbake-layers add-layer /home/runner/work/meta-raspberry/
+          bitbake-layers add-layer /home/runner/work/meta-dotnet/
+          MACHINE=${{matrix.target_machine}}
+          df -h
+        working-directory: /mnt
