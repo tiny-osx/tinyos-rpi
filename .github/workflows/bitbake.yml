@@ -51,9 +51,9 @@ jobs:
           sudo chown runner /mnt
           git clone -b ${TARGET_VERSION} git://git.yoctoproject.org/poky.git
           git clone -b ${TARGET_VERSION} git://git.openembedded.org/meta-openembedded
-          git clone -b ${TARGET_VERSION} https://github.com/tiny-osx/meta-tinyos-distro.git
-          git clone -b ${TARGET_VERSION} https://github.com/tiny-osx/meta-dotnet.git
-          git clone -b ${TARGET_VERSION} https://github.com/tiny-osx/meta-raspberry.git
+          git clone -b main https://github.com/tiny-osx/meta-tinyos-distro.git
+          git clone -b main https://github.com/tiny-osx/meta-dotnet.git
+          git clone -b main https://github.com/tiny-osx/meta-raspberry.git
         working-directory: /home/runner/work
 
       # Run bitbake
