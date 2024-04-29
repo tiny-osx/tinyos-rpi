@@ -1,0 +1,68 @@
+{
+	"extensions": {    
+		"recommendations": [
+			"yocto-project.yocto-bitbake"
+    ]},
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.rulers": [
+			120
+		],
+		"extensions.ignoreRecommendations": true,
+		"files.watcherExclude": {
+			"**/.repo": true,
+			"**/cache": true,
+			"**/downloads": true,
+			"**/meta*": true,
+			"**/poky": true,
+			"**/source": true,
+			"**/buildhistory": true,
+			"**/sstate-cache": true,
+			"**/tmp": true,
+			"**/tmp-glibc": true
+		},
+		"files.exclude": {
+			"**/bitbake*": true,
+			"**/hashserv*": true
+		},
+		"C_Cpp.files.exclude": {
+			"**/build": true
+		},
+		"git.ignoredRepositories": [
+			"./poky"
+		],
+		"python.autoComplete.extraPaths": [
+			"${workspaceFolder}/poky/bitbake/lib",
+			"${workspaceFolder}/poky/meta/lib",
+			"${workspaceFolder}/poky/bitbake/lib"
+		],
+		"python.analysis.extraPaths": [
+			"${workspaceFolder}/poky/bitbake/lib",
+			"${workspaceFolder}/poky/meta/lib",
+			"${workspaceFolder}/poky/bitbake/lib"
+		],
+		"[python]": {
+			"diffEditor.ignoreTrimWhitespace": false,
+			"editor.formatOnType": true,
+			"editor.wordBasedSuggestions": "off",
+			"files.trimTrailingWhitespace": false
+		},
+		"[shellscript]": {
+			"files.eol": "\n",
+			"files.trimTrailingWhitespace": false
+		},
+		"bitbake.pathToBitbakeFolder": "${workspaceFolder}/poky/bitbake",
+		"bitbake.pathToBuildFolder": "${workspaceFolder}/build",
+		"bitbake.pathToEnvScript": "${workspaceFolder}/poky/oe-init-build-env",
+		"bitbake.sdkImage": "tinyos-image",
+		"task.saveBeforeRun": "never",
+		"files.associations": {
+			"*.conf": "bitbake",
+			"*.inc": "bitbake"
+		}
+	}
+}
