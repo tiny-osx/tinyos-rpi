@@ -1,0 +1,56 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Bitbake Raspberry Pi
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the kirkstone branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 12 * * 5'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  TARGET_VERSION: master
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  bitbake-raspberrypi:
+
+    strategy:
+      matrix:
+        target_machine: [raspberrypi0-2w, raspberrypi4, raspberrypi5]
+        tensorflow_version: [2.16.1]
+
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      
+      # Install essential host packages
+      - name: Install Pakages
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install gawk wget git-core diffstat unzip texinfo gcc-multilib \
+            build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils \
+            debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev \
+            pylint xterm zstd liblz4-tool
+          sudo apt-get clean
+          sudo apt-get autoclean -y
+          
+      # checkout repository
+      - name: Clone poky, meta-raspberrypi, meta-openembedded
+        run: |
+          sudo chown runner /mnt
+          git clone -b ${TARGET_VERSION} git://git.yoctoproject.org/poky.git
+          git clone -b ${TARGET_VERSION} git://git.yoctoproject.org/meta-raspberrypi
+          git clone -b ${TARGET_VERSION} git://git.openembedded.org/meta-openembedded
+        working-directory: /home/runner/work
