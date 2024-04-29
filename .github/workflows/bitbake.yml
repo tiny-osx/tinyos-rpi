@@ -49,8 +49,8 @@ jobs:
       - name: Clone poky, meta-raspberrypi, meta-openembedded
         run: |
           sudo chown runner /mnt
-          git clone -b ${TARGET_VERSION} git://git.yoctoproject.org/poky.git
-          git clone -b ${TARGET_VERSION} git://git.openembedded.org/meta-openembedded
+          git clone -b kirkstone git://git.yoctoproject.org/poky.git
+          git clone -b kirkstone git://git.openembedded.org/meta-openembedded
           git clone -b main https://github.com/tiny-osx/meta-tinyos-distro.git
           git clone -b main https://github.com/tiny-osx/meta-dotnet.git
           git clone -b main https://github.com/tiny-osx/meta-raspberry.git
