@@ -46,7 +46,7 @@ jobs:
       # Run bitbake
       - name: Bitbake MACHINE=${{ matrix.target_machine }}
         run: |
-          source ./poky/oe-init-build-env build
+          source poky/oe-init-build-env build
           bitbake-layers add-layer /home/runner/work/meta-openembedded/meta-oe/
           bitbake-layers add-layer /home/runner/work/meta-tinyos-distro/
           bitbake-layers add-layer /home/runner/work/meta-raspberry/
