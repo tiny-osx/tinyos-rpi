@@ -52,6 +52,13 @@ jobs:
           MACHINE=raspberrypi5 bitbake tinyos-image --dry-run
           MACHINE=raspberrypi5 bitbake tinyos-debug-image --dry-run
 
+      - name: Archive raspberry pi 5 image
+        uses: action/upload-artifacts@v3
+        with:
+          name: Raspbery Pi 5 Image
+          path: |
+            /build/tmp/deploy/images/raspberrypi5/tinyos-image-raspberrypi5.tar.gz
+
       - name: Create raspberry pi 4 image
         run:  |
           source poky/oe-init-build-env build
