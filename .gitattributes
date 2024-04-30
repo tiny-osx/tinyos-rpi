@@ -1,4 +1,4 @@
-*.* linguist-language=yocto
+*.* linguist-language=bitbake
 
 # Set the default behavior
 * text=auto
