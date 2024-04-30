@@ -49,7 +49,7 @@ jobs:
       - name: Create raspberry pi 5 image
         run: |
           source poky/oe-init-build-env build
-          MACHINE=raspberrypi5 bitbake tinyos-image --dry-run
+          MACHINE=raspberrypi5 bitbake tinyos-image
           MACHINE=raspberrypi5 bitbake tinyos-debug-image --dry-run
 
       - name: Archive raspberry pi 5 image
