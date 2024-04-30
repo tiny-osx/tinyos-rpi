@@ -48,8 +48,8 @@ jobs:
           bitbake-layers add-layer ../meta-tinyos-distro/
           bitbake-layers add-layer ../meta-raspberry/
           bitbake-layers add-layer ../meta-dotnet/
+          bitbake tinyos-image --dry-run
           
       # Show disk information
       - name: Show disk information
-        run: |
-          df -h
+        run: df -h
