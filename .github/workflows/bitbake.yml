@@ -47,18 +47,18 @@ jobs:
 
       - name: Create raspberry pi 5 image
         run: |
-          MACHINE=raspberrypi5 
-          bitbake tinyos-image --dry-run
+          MACHINE=raspberrypi5 bitbake tinyos-image --dry-run
+          MACHINE=raspberrypi5 bitbake tinyos-debug-image --dry-run
 
       - name: Create raspberry pi 4 image
-        run: |
-          MACHINE=raspberrypi4 
-          bitbake tinyos-image --dry-run
+        run:  |
+          MACHINE=raspberrypi4 bitbake tinyos-image --dry-run
+          MACHINE=raspberrypi4 bitbake tinyos-debug-image --dry-run
 
       - name: Create raspberry pi 0 image
-        run: |
-          MACHINE=raspberrypi0-2w
-          bitbake tinyos-image --dry-run
+        run:  | 
+          MACHINE=raspberrypi0-2w bitbake tinyos-image --dry-run
+          MACHINE=raspberrypi0-2w bitbake tinyos-debug-image --dry-run
       
       # Show disk information
       - name: Show disk information
