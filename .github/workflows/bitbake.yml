@@ -33,28 +33,15 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      
-      # Install essential host packages
-      - name: Install Pakages
-        run: |
-          sudo apt-get update
-          sudo apt-get -y install gawk wget git-core diffstat unzip texinfo gcc-multilib \
-            build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils \
-            debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev \
-            pylint xterm zstd liblz4-tool
-          sudo apt-get clean
-          sudo apt-get autoclean -y
           
       # checkout repository
       - name: Clone poky, meta-raspberrypi, meta-openembedded
         run: |
-          sudo chown runner /mnt
           git clone -b kirkstone git://git.yoctoproject.org/poky.git
           git clone -b kirkstone git://git.openembedded.org/meta-openembedded
           git clone -b main https://github.com/tiny-osx/meta-tinyos-distro.git
           git clone -b main https://github.com/tiny-osx/meta-dotnet.git
           git clone -b main https://github.com/tiny-osx/meta-raspberry.git
-        working-directory: /home/runner/work
 
       # Run bitbake
       - name: Bitbake MACHINE=${{ matrix.target_machine }}
