@@ -37,8 +37,8 @@ jobs:
       # checkout repository
       - name: Clone poky, meta-raspberrypi, meta-openembedded
         run: |
-          git clone -b kirkstone git://git.yoctoproject.org/poky.git
-          git clone -b kirkstone git://git.openembedded.org/meta-openembedded
+          git clone -b kirkstone git://git.yoctoproject.org/poky.git poky
+          git clone -b kirkstone git://git.openembedded.org/meta-openembedded poky/meta-openembedded
           git clone -b main https://github.com/tiny-osx/meta-tinyos-distro.git
           git clone -b main https://github.com/tiny-osx/meta-dotnet.git
           git clone -b main https://github.com/tiny-osx/meta-raspberry.git
@@ -46,7 +46,7 @@ jobs:
       # Run bitbake
       - name: Bitbake MACHINE=${{ matrix.target_machine }}
         run: |
-          . source poky/oe-init-build-env build
+          source ./poky/oe-init-build-env build
           bitbake-layers add-layer /home/runner/work/meta-openembedded/meta-oe/
           bitbake-layers add-layer /home/runner/work/meta-tinyos-distro/
           bitbake-layers add-layer /home/runner/work/meta-raspberry/
