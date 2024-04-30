@@ -1,3 +1,5 @@
+*.* linguist-language=yocto
+
 # Set the default behavior
 * text=auto
 
