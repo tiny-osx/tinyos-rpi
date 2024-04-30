@@ -52,4 +52,3 @@ jobs:
           bitbake-layers add-layer /home/runner/work/meta-raspberry/
           bitbake-layers add-layer /home/runner/work/meta-dotnet/
           df -h
-        working-directory: /mnt
