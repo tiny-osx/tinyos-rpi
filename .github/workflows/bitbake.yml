@@ -18,11 +18,7 @@ env:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   bitbake-raspberrypi:
-
-    strategy:
-      matrix:
-        target_machine: [raspberrypi0-2w, raspberrypi4, raspberrypi5]
-
+  
     runs-on: [self-hosted]
 
     steps:
@@ -41,15 +37,29 @@ jobs:
           git clone -b ${{ env.TARGET_VERSION }} https://github.com/tiny-osx/meta-raspberry.git
       
       # Run bitbake
-      - name: Bitbake MACHINE=${{ matrix.target_machine }}
+      - name: Setup bitbake layers
         run: |
           source poky/oe-init-build-env build
           bitbake-layers add-layer ../poky/meta-openembedded/meta-oe/
           bitbake-layers add-layer ../meta-tinyos-distro/
           bitbake-layers add-layer ../meta-raspberry/
           bitbake-layers add-layer ../meta-dotnet/
+
+      - name: Create raspberry pi 5 image
+        run: |
+          MACHINE=raspberrypi5 
           bitbake tinyos-image --dry-run
-          
+
+      - name: Create raspberry pi 4 image
+        run: |
+          MACHINE=raspberrypi4 
+          bitbake tinyos-image --dry-run
+
+      - name: Create raspberry pi 0 image
+        run: |
+          MACHINE=raspberrypi0-2w
+          bitbake tinyos-image --dry-run
+      
       # Show disk information
       - name: Show disk information
         run: df -h
