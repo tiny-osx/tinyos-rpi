@@ -53,7 +53,7 @@ jobs:
           MACHINE=raspberrypi5 bitbake tinyos-debug-image --dry-run
 
       - name: Archive raspberry pi 5 image
-        uses: action/upload-artifacts@v3
+        uses: action/upload-artifact@v3
         with:
           name: Raspbery Pi 5 Image
           path: |
