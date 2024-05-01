@@ -4,8 +4,12 @@ on:
   # Triggers the workflow on push or pull request events but only for the kirkstone branch
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    paths: 
+      - '**'
+      - '!.editorconfig'
+      - '!.gitattributes'
+      - '!.gitignore'
+      - '!*.md'
   schedule:
     - cron: '0 12 * * 5'
 
@@ -49,7 +53,7 @@ jobs:
       - name: Create raspberry pi 5 image
         run: |
           source poky/oe-init-build-env build
-          MACHINE=raspberrypi5 bitbake tinyos-image
+          MACHINE=raspberrypi5 bitbake tinyos-image --dry-run
           MACHINE=raspberrypi5 bitbake tinyos-debug-image --dry-run
 
       - name: Archive raspberry pi 5 image
