@@ -19,7 +19,7 @@ Clone the main repository using the following command:
 git clone https://github.com/tiny-osx/tinyos-rpi.git
 ```
 
-Before you continue to Build, make sure you're in the roslyn directory:
+Before you continue to Build, make sure you're in the tinyos directory:
 ```bash
 cd tinyos-rpi
 ./run-build.sh install
