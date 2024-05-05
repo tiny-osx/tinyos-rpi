@@ -5,6 +5,7 @@ set -e
 
 BUILD_DIR="build"
 IMAGE_NAME="tinyos-debug-image"
+TARGET_VERSION="kirkstone"
 
 declare -a machines=("raspberrypi0-2w" "raspberrypi4" "raspberrypi5")
 declare -a recipes=("tinyos-image" "tinyos-debug-image" "package-index")
@@ -19,9 +20,18 @@ install() {
 }
 
 init() {
-  git clone git://git.yoctoproject.org/poky poky -b kirkstone
-  git clone git://git.openembedded.org/meta-openembedded poky/meta-openembedded -b kirkstone
+  git clone git://git.yoctoproject.org/poky poky -b $TARGET_VERSION
+  git clone git://git.openembedded.org/meta-openembedded poky/meta-openembedded -b $TARGET_VERSION
+  git clone https://github.com/tiny-osx/meta-tinyos-distro.git meta-tinyos-distro -b $TARGET_VERSION
+  git clone https://github.com/tiny-osx/meta-dotnet.git meta-dotnet -b $TARGET_VERSION
+  git clone https://github.com/tiny-osx/meta-raspberry.git meta-raspberry -b $TARGET_VERSION
+  
   _source
+  
+  bitbake-layers add-layer ../poky/meta-openembedded/meta-oe/
+  bitbake-layers add-layer ../meta-tinyos-distro/
+  bitbake-layers add-layer ../meta-raspberry/
+  bitbake-layers add-layer ../meta-dotnet/
 }
 
 bake() {

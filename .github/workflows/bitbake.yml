@@ -10,8 +10,6 @@ on:
       - '!.gitattributes'
       - '!.gitignore'
       - '!*.md'
-  schedule:
-    - cron: '0 12 * * 5'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -53,8 +51,8 @@ jobs:
       - name: Create raspberry pi 5 image
         run: |
           source poky/oe-init-build-env build
-          MACHINE=raspberrypi5 bitbake tinyos-image --dry-run
-          MACHINE=raspberrypi5 bitbake tinyos-debug-image --dry-run
+          MACHINE=raspberrypi5 bitbake tinyos-image
+          MACHINE=raspberrypi5 bitbake tinyos-debug-image
 
       - name: Archive raspberry pi 5 image
         uses: actions/upload-artifact@v4
@@ -62,18 +60,7 @@ jobs:
           name: Raspbery Pi 5 Image
           path: |
             /build/tmp/deploy/images/raspberrypi5/tinyos-image-raspberrypi5.tar.gz
-
-      - name: Create raspberry pi 4 image
-        run:  |
-          source poky/oe-init-build-env build
-          MACHINE=raspberrypi4 bitbake tinyos-image --dry-run
-          MACHINE=raspberrypi4 bitbake tinyos-debug-image --dry-run
-
-      - name: Create raspberry pi 0 image
-        run:  | 
-          source poky/oe-init-build-env build
-          MACHINE=raspberrypi0-2w bitbake tinyos-image --dry-run
-          MACHINE=raspberrypi0-2w bitbake tinyos-debug-image --dry-run
+            /build/tmp/deploy/images/raspberrypi5/tinyos-debug-image-raspberrypi5.tar.gz
       
       # Show disk information
       - name: Show disk information

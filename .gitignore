@@ -1,4 +1,7 @@
 poky
+meta-dotnet
+meta-raspberry
+meta-tinyos-distro
 build/*
 !build/conf
 build/conf/*
