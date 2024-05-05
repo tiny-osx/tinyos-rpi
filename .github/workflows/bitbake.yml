@@ -54,13 +54,14 @@ jobs:
           MACHINE=raspberrypi5 bitbake tinyos-image
           MACHINE=raspberrypi5 bitbake tinyos-debug-image
 
-      - name: Archive raspberry pi 5 image
+      - name: Archive raspberry pi build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Raspbery Pi 5 Image
+          name: Raspbery Pi Artifacts
           path: |
-            /build/tmp/deploy/images/raspberrypi5/tinyos-image-raspberrypi5.tar.gz
-            /build/tmp/deploy/images/raspberrypi5/tinyos-debug-image-raspberrypi5.tar.gz
+            ./build/tmp/deploy/images/*/*.rootfs.*
+            ./build/tmp/buildhistory/images/*/glibc/*
+          retention-days: 5
       
       # Show disk information
       - name: Show disk information
