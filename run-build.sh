@@ -4,7 +4,8 @@
 set -e
 
 BUILD_DIR="build"
-IMAGE_NAME="tinyos-debug-image"
+IMAGE_NAME="tinyos-image"
+MACHINE_NAME="raspberrypi4"
 TARGET_VERSION="kirkstone"
 
 declare -a machines=("raspberrypi0-2w" "raspberrypi4" "raspberrypi5")
@@ -37,7 +38,7 @@ init() {
 
 bake() {
   _source
-  bitbake $IMAGE_NAME
+  MACHINE=$MACHINE_NAME bitbake $IMAGE_NAME
 }
 
 bakeall() {
@@ -75,7 +76,7 @@ flash() {
 
   oe-run-native \
       bmap-tools-native bmaptool copy \
-      ./tmp/deploy/images/raspberrypi4/$IMAGE_NAME-raspberrypi4.wic.gz \
+      ./tmp/deploy/images/$MACHINE_NAME/$IMAGE_NAME-$MACHINE_NAME.wic.gz \
       /dev/sdb
 
   udisksctl power-off -b /dev/sdb
