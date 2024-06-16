@@ -4,12 +4,12 @@
 set -e
 
 BUILD_DIR="build"
-IMAGE_NAME="tinyos-image"
-MACHINE_NAME="raspberrypi4"
+IMAGE_NAME="tinyos-debug-image"
+MACHINE_NAME="raspberrypi5"
 TARGET_VERSION="kirkstone"
 
-declare -a machines=("raspberrypi0-2w" "raspberrypi4" "raspberrypi5")
-declare -a recipes=("tinyos-image" "tinyos-debug-image" "package-index")
+declare -a machines=("raspberrypi0-2w" "raspberrypi3" "raspberrypi4" "raspberrypi5")
+declare -a recipes=("tinyos-image" "package-index")
 
 install() {
     sudo apt-get update
@@ -148,6 +148,10 @@ case $1 in
   package)
     shift
     package "$@"
+    ;;
+  cleanall)
+    shift
+    cleanall "$@"
     ;;
   bakeall)
     shift
