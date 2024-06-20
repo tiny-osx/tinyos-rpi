@@ -4,9 +4,10 @@
 set -e
 
 BUILD_DIR="build"
-IMAGE_NAME="tinyos-debug-image"
-MACHINE_NAME="raspberrypi5"
+IMAGE_NAME="tinyos-image"
+MACHINE_NAME="raspberrypi0-2w"
 TARGET_VERSION="kirkstone"
+DEVICE="/dev/sdb"
 
 declare -a machines=("raspberrypi0-2w" "raspberrypi3" "raspberrypi4" "raspberrypi5")
 declare -a recipes=("tinyos-image" "package-index")
@@ -66,20 +67,78 @@ busybox() {
   bitbake -c menuconfig busybox
 }
 
-flash() {
-  _source
-# bitbake package-index
-  bitbake bmap-tools-native -caddto_recipe_sysroot
-  sudo chmod 666 /dev/sdb
+_function_yesno () {
+    while :
+    do
+        echo "$* (Yes/No)?"
+        read -r yn
+        case $yn in
+            yes|Yes|YES)
+                return 0
+                ;;
+            no|No|NO)
+                return 1
+                ;;
+            *)
+                echo Please answer Yes or No.
+                ;;
+        esac
+    done
+}
 
- # umount /dev/sdb
+_umount_part () {
+    cnt_dev=1
+    for p in $(mount|grep $DEVICE|cut -d' ' -f3); do
+        part[$cnt_dev]=$p
+        cnt_dev=$((cnt_dev + 1))
+    done
+
+    for (( i=1; i<${#part[@]}+1; i++ )); do
+        path2part=${part[$i]}
+        # unset or empty string
+        if [ -z "$1" ]; then
+            echo "$path2part"
+        else
+            sudo umount "$path2part"
+        fi
+    done
+}
+
+flash() {
+ 
+  echo
+  echo "Block device:"
+  lsblk -p "$DEVICE"
+  echo
+
+  sudo chmod 666 $DEVICE
+
+  if mount | grep -c "$DEVICE" &>/dev/null; then
+    echo
+    echo "Error! Unable write to mounted device: $DEVICE"
+    echo "You should unmount the device before writing!"
+    echo
+    echo "Mounted parts of '$DEVICE':"
+    _umount_part
+    echo
+    if _function_yesno "Would you like unmout them"; then
+        echo 'Unmout ...'
+        _umount_part "umount"
+    else
+        exit 0
+    fi
+  fi
+
+  _source
+
+  bitbake bmap-tools-native -c addto_recipe_sysroot
 
   oe-run-native \
-      bmap-tools-native bmaptool copy \
-      ./tmp/deploy/images/$MACHINE_NAME/$IMAGE_NAME-$MACHINE_NAME.wic.gz \
-      /dev/sdb
+    bmap-tools-native bmaptool copy \
+    ./tmp/deploy/images/$MACHINE_NAME/$IMAGE_NAME-$MACHINE_NAME.wic.gz \
+    $DEVICE
 
-  udisksctl power-off -b /dev/sdb
+  # sudo udisksctl power-off -b $DEVICE
 }
 
 update() {
