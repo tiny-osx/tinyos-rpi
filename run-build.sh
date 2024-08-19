@@ -5,7 +5,7 @@ set -e
 
 BUILD_DIR="build"
 IMAGE_NAME="tinyos-image"
-MACHINE_NAME="raspberrypi0-2w"
+MACHINE_NAME="raspberrypi4"
 TARGET_VERSION="kirkstone"
 DEVICE="/dev/sdb"
 
@@ -132,7 +132,8 @@ flash() {
   _source
 
   bitbake bmap-tools-native -c addto_recipe_sysroot
-
+  bitbake rpiboot-tools-native -c addto_recipe_sysroot
+  
   oe-run-native \
     bmap-tools-native bmaptool copy \
     ./tmp/deploy/images/$MACHINE_NAME/$IMAGE_NAME-$MACHINE_NAME.wic.gz \
