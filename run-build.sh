@@ -9,6 +9,7 @@ MACHINE_NAME="raspberrypi4"
 TARGET_VERSION="kirkstone"
 DEVICE="/dev/sdb"
 
+
 declare -a machines=("raspberrypi0-2w" "raspberrypi3" "raspberrypi4" "raspberrypi5")
 declare -a recipes=("tinyos-image" "package-index")
 
@@ -132,8 +133,7 @@ flash() {
   _source
 
   bitbake bmap-tools-native -c addto_recipe_sysroot
-  bitbake rpiboot-tools-native -c addto_recipe_sysroot
-  
+
   oe-run-native \
     bmap-tools-native bmaptool copy \
     ./tmp/deploy/images/$MACHINE_NAME/$IMAGE_NAME-$MACHINE_NAME.wic.gz \

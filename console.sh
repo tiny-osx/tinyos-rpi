@@ -11,3 +11,5 @@ sudo picocom /dev/ttyUSB0 -b 115200
 
 # Raspberry Pi Debug Probe Kit 
 # sudo picocom /dev/ttyACM0 -b 115200
+
+# sudo minicom -o -D /dev/ttyACM0 -b 115200
