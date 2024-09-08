@@ -9,11 +9,12 @@ The following boards are known to build and work, but are not undergoing QA:
 | Board       | MACHINE     | Notes |
 | ----------- | ----------- | ----- |
 | [Raspberry Pi 0-2W](https://www.raspberrypi.com/products/raspberry-pi-zero-2-w) | `raspberrypi0-2w` | |
-| [Raspberry Pi 3 Model A+](https://www.raspberrypi.com/products/raspberry-pi-3-model-a-plus) | `raspberrypi3` | |
-| [Raspberry Pi 3 Model B/B+](https://www.raspberrypi.com/products/raspberry-pi-3-model-b-plus) | `raspberrypi3` | |
+| [Raspberry Pi 3 Model A+](https://www.raspberrypi.com/products/raspberry-pi-3-model-a-plus) | `raspberrypi3` | OTG via type-A socket only an A-A USB or A-C cable is required. |
 | [Raspberry Pi 4 Model B](https://www.raspberrypi.com/products/raspberry-pi-4-model-b) | `raspberrypi4` | |
 | [Raspberry Pi 4 Compute Module](https://www.raspberrypi.com/products/compute-module-4) | `raspberrypi4` | |
 | [Raspberry Pi 5](https://www.raspberrypi.com/products/raspberry-pi-5) | `raspberrypi5` | |
+
+Note: OTG is not supported on Pi B, B+, 2, 3, 3A+, and 3B+
 
 ## Clone the Repository
 

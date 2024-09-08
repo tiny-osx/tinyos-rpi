@@ -10,7 +10,7 @@ TARGET_VERSION="kirkstone"
 DEVICE="/dev/sdb"
 
 
-declare -a machines=("raspberrypi0-2w" "raspberrypi3" "raspberrypi4" "raspberrypi5")
+declare -a machines=("raspberrypi0-2w" "raspberrypi3-aplus" "raspberrypi4" "raspberrypi5")
 declare -a recipes=("tinyos-image" "package-index")
 
 install() {
