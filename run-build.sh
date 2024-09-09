@@ -5,8 +5,8 @@ set -e
 
 BUILD_DIR="build"
 IMAGE_NAME="tinyos-image"
-MACHINE_NAME="raspberrypi4"
-TARGET_VERSION="kirkstone"
+MACHINE_NAME="raspberrypi0-2w"
+TARGET_VERSION="scarthgap"
 DEVICE="/dev/sdb"
 
 
@@ -132,11 +132,19 @@ flash() {
 
   _source
 
-  bitbake bmap-tools-native -c addto_recipe_sysroot
+  # bitbake rpiboot-native -c addto_recipe_sysroot
+
+
+  # Here's the easiest solution to unlock access to usb hardware
+  # sudo chmod -R 777 /dev/bus/usb/
+  # oe-run-native \
+  #   rpiboot-native rpiboot2
+
+  bitbake bmaptool-native -c addto_recipe_sysroot
 
   oe-run-native \
-    bmap-tools-native bmaptool copy \
-    ./tmp/deploy/images/$MACHINE_NAME/$IMAGE_NAME-$MACHINE_NAME.wic.gz \
+    bmaptool-native bmaptool copy \
+    ./tmp/deploy/images/$MACHINE_NAME/$IMAGE_NAME-$MACHINE_NAME.rootfs.wic.gz \
     $DEVICE
 
   # sudo udisksctl power-off -b $DEVICE
