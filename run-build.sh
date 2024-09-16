@@ -4,14 +4,14 @@
 set -e
 
 BUILD_DIR="build"
-IMAGE_NAME="tinyos-image"
-MACHINE_NAME="raspberrypi0-2w"
+IMAGE_NAME="tinyos-debug-image"
+MACHINE_NAME="raspberrypi5"
 TARGET_VERSION="scarthgap"
 DEVICE="/dev/sdb"
 
 
 declare -a machines=("raspberrypi0-2w" "raspberrypi3-aplus" "raspberrypi4" "raspberrypi5")
-declare -a recipes=("tinyos-image" "package-index")
+declare -a recipes=("tinyos-image" "tinyos-debug-image" "package-index")
 
 install() {
     sudo apt-get update
