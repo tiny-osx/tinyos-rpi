@@ -4,11 +4,10 @@
 set -e
 
 BUILD_DIR="build"
-IMAGE_NAME="tinyos-debug-image"
-MACHINE_NAME="raspberrypi5"
+IMAGE_NAME="tinyos-image"
+MACHINE_NAME="raspberrypi0-2w"
 TARGET_VERSION="scarthgap"
 DEVICE="/dev/sdb"
-
 
 declare -a machines=("raspberrypi0-2w" "raspberrypi3-aplus" "raspberrypi4" "raspberrypi5")
 declare -a recipes=("tinyos-image" "tinyos-debug-image" "package-index")
@@ -134,11 +133,12 @@ flash() {
 
   # bitbake rpiboot-native -c addto_recipe_sysroot
 
-
-  # Here's the easiest solution to unlock access to usb hardware
+  # # Here's the easiest solution to unlock access to usb hardware
   # sudo chmod -R 777 /dev/bus/usb/
   # oe-run-native \
-  #   rpiboot-native rpiboot2
+  #   rpiboot-native rpiboot
+
+  # sudo chmod 666 $DEVICE
 
   bitbake bmaptool-native -c addto_recipe_sysroot
 
